@@ -1,0 +1,114 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Day as a Game - Interactive</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #fefefe;
+            color: #333;
+            padding: 2em;
+            line-height: 1.6;
+        }
+        h1 {
+            text-align: center;
+            color: #4CAF50;
+        }
+        .event-card {
+            border: 1px solid #ccc;
+            border-radius: 12px;
+            padding: 1em;
+            margin: 1em auto;
+            max-width: 500px;
+            box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
+            cursor: pointer;
+        }
+        .event-card:hover {
+            background-color: #f9f9f9;
+        }
+        .event-card h2 {
+            margin: 0 0 0.5em;
+        }
+        .status-bar {
+            text-align: center;
+            margin-top: 2em;
+            font-size: 1.2em;
+            font-weight: bold;
+            background-color: #e0f2f1;
+            padding: 1em;
+            border-radius: 8px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .game-over {
+            color: red;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 2em;
+            font-size: 1.3em;
+        }
+    </style>
+</head>
+<body>
+    <h1>My Day as a Game</h1>
+
+    <div class="event-card" onclick="updateStats(-1, 0.1, 0, 0)">
+        <h2>☀️ 起床</h2>
+        <div class="status">-1 精神力 / +0.1 勇气</div>
+    </div>
+
+    <div class="event-card" onclick="updateStats(0, 0, 2, -15)">
+        <h2>🍜 吃拉面</h2>
+        <div class="status">+2 快乐 / -15 金钱</div>
+    </div>
+
+    <div class="event-card" onclick="updateStats(-2, 0.3, 0, 0)">
+        <h2>📖 上课</h2>
+        <div class="status">-2 体力 / +0.3 理想感</div>
+    </div>
+
+    <div class="event-card" onclick="updateStats(0, 0, 5, -3)">
+        <h2>📱 刷小红书</h2>
+        <div class="status">+5 快乐 / -3 自我认同</div>
+    </div>
+
+    <div class="event-card" onclick="updateStats(4, 0, 0, 0)">
+        <h2>🌙 睡觉</h2>
+        <div class="status">+4 精神恢复 / 游戏结束</div>
+    </div>
+
+    <div class="status-bar" id="statusBar">
+        当前状态｜精神力: 0｜勇气: 0｜快乐: 0｜金钱: 0
+    </div>
+
+    <div class="game-over" id="gameOverMessage"></div>
+
+    <script>
+        let spirit = 0;
+        let courage = 0;
+        let joy = 0;
+        let money = 0;
+        let gameOver = false;
+
+        function updateStats(dSpirit, dCourage, dJoy, dMoney) {
+            if (gameOver) return;
+
+            spirit += dSpirit;
+            courage += dCourage;
+            joy += dJoy;
+            money += dMoney;
+
+            document.getElementById("statusBar").innerText = 
+                `当前状态｜精神力: ${spirit}｜勇气: ${courage.toFixed(1)}｜快乐: ${joy}｜金钱: ${money}`;
+
+            if (spirit <= -5 || money <= -30 || joy >= 10 || courage >= 2) {
+                document.getElementById("gameOverMessage").innerText = "🎮 游戏结束：你的状态已达到极限。";
+                gameOver = true;
+            }
+        }
+    </script>
+</body>
+</html>
